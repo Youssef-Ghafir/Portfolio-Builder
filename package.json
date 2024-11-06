@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "tawilwind": "npx tailwindcss -i ./asset/style/input.css -o ./asset/style/output.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.14"
+  }
+}
