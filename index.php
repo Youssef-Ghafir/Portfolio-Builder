@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,10 +20,41 @@
   <nav class="container h-[70px] flex items-center justify-between">
     <a href="/" class="font-semibold text-xl capitalize">YG Builder</a>
     <div class="flex items-center gap-x-4">
-      <button
-        class="px-7 py-3 bg-green-800 text-white rounded-full text-sm transition-colors duration-300 ease-in-out hover:bg-green-600">
-        Log in
-      </button>
+      <?php
+      if (!isset($_SESSION['email'])) {
+      ?>
+        <a
+          href="singup.php"
+          class="px-7 py-3 bg-green-800 text-white rounded-full text-sm transition-colors duration-300 ease-in-out hover:bg-green-600">
+          Log in
+        </a>
+      <?php } else {; ?>
+        <div class="relative">
+          <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start" class="w-10 h-10 rounded-full cursor-pointer" src="asset/images/user.png" alt="User dropdown">
+
+          <!-- Dropdown menu -->
+          <div id="userDropdown" class="hidden z-10 absolute top-full right-full bg-white divide-y divide-gray-100 rounded-lg shadow w-44 ">
+            <div class="px-4 py-3 text-sm text-gray-900 ">
+              <div><?php $beforeAt = explode('@', $_SESSION["email"])[0];
+                    echo $beforeAt; ?></div>
+              <div class="font-medium truncate"><?php echo $_SESSION["email"] ?></div>
+            </div>
+            <ul class="py-2 text-sm text-gray-700 " aria-labelledby="avatarButton">
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">Dashboard</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">Settings</a>
+              </li>
+            </ul>
+            <form action="lib/signout.php">
+              <div class="py-1">
+                <button type="submit" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Sign out</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      <?php }; ?>
     </div>
   </nav>
   <div
@@ -58,6 +92,13 @@
         class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">YG</a>
     </p>
   </footer>
+  <script>
+    const userDropdown = document.getElementById('userDropdown');
+    const avatarButton = document.getElementById('avatarButton');
+    avatarButton.addEventListener('click', () => {
+      userDropdown.classList.toggle('hidden');
+    });
+  </script>
 </body>
 
 </html>

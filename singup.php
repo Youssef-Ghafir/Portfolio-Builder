@@ -1,3 +1,6 @@
+<?php
+include_once "lib/singup.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,29 +28,34 @@
         class="font-semibold text-xl capitalize text-center py-5 block">YG Builder</a>
       <div class="max-w-[450px] w-full flex flex-col justify-center mx-auto items-center mt-10">
         <h1 class="text-4xl text-center font-medium">Hi! Welcome to <br />YG Builder &#128075</h1>
-        <form class="mt-10">
-          <div class="flex items-center mt-5 gap-x-4 mb-4">
+        <form class="mt-10" method="POST" action="<?php echo $_SERVER["PHP_SELF"] ?>">
+          <div class="flex mt-5 gap-x-4 mb-4">
             <div>
               <label for="fname" class="block mb-2 text-sm font-medium text-gray-900">First Name</label>
-              <input type="text" id="fname" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="John" name="fname" required />
+              <input type="text" id="fname" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="John" name="fname" required value="<?php echo !empty($values["fname"]) ? $values["fname"] : ''; ?>" />
+              <?php echo isset($errors["f_name"]) ? "<p class=' text-red-500 text-sm px-3 py-1'> " . $errors["f_name"] . "</p>" : ''; ?>
             </div>
             <div>
               <label for="lname" class="block mb-2 text-sm font-medium text-gray-900">Last Name</label>
-              <input type="text" id="lname" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 rounded-full" placeholder="Doe" name="fname" required />
+              <input type="text" id="lname" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 rounded-full" placeholder="Doe" name="lname" required value="<?php echo !empty($values["lname"]) ? $values["lname"] : ''; ?>" />
+              <?php echo isset($errors["l_name"]) ? "<p class=' text-red-500 text-sm px-3 py-1'> " . $errors["l_name"] . "</p>" : ''; ?>
             </div>
           </div>
           <div class="mb-4">
             <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
-            <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="johndoe@gmail.com" name="email" required autocomplete="off" />
+            <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="johndoe@gmail.com" name="email" required autocomplete="off" value="<?php echo !empty($values["email"]) ? $values["email"] : ''; ?>" />
+            <?php echo isset($errors["email"]) ? "<p class=' text-red-500 text-sm px-3 py-1'> " . $errors["email"] . "</p>" : ''; ?>
           </div>
-          <div class="flex gap-x-4 items-center mb-5">
+          <div class="flex gap-x-4 mb-5">
             <div class="">
               <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
               <input type="password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="your password" name="password" required autocomplete="off" />
+              <?php echo isset($errors["password"]) ? "<p class=' text-red-500 text-sm px-3 py-1'> " . $errors["password"] . "</p>" : ''; ?>
             </div>
             <div class="">
               <label for="c_password" class="block mb-2 text-sm font-medium text-gray-900">Confirm Password</label>
               <input type="password" id="c_password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="confirm password" name="c_password" required autocomplete="off" />
+              <?php echo isset($errors["c_password"]) ? "<p class=' text-red-500 text-sm px-3 py-1'> " . $errors["c_password"] . "</p>" : ''; ?>
             </div>
           </div>
           <button type="submit" class="w-full py-3 text-sm mt-2 bg-green-400 text-white rounded-full">Sing up</button>

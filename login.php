@@ -1,3 +1,6 @@
+<?php
+include_once "lib/login.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,14 +28,18 @@
                 class="font-semibold text-xl capitalize text-center py-5 block">YG Builder</a>
             <div class="max-w-[450px] w-full flex flex-col justify-center mx-auto  mt-10">
                 <h1 class="text-4xl text-center font-medium">Hi! Welcome to <br />YG Builder &#128075</h1>
-                <form class="mt-10">
+                <form class="mt-10" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <div class="mb-4">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
-                        <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="johndoe@gmail.com" name="email" required autocomplete="off" />
+                        <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="johndoe@gmail.com" name="email" required
+                            value="<?php echo !empty($values["email"]) ? $values["email"] : ''; ?>"
+                            autocomplete="off" />
+                        <?php echo isset($errors["email"]) ? "<p class=' text-red-500 text-sm px-3 py-1'> " . $errors["email"] . "</p>" : ''; ?>
                     </div>
                     <div class="mb-4">
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
                         <input type="password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="your password" name="password" required autocomplete="off" />
+                        <?php echo isset($errors["password"]) ? "<p class=' text-red-500 text-sm px-3 py-1'> " . $errors["password"] . "</p>" : ''; ?>
                     </div>
                     <button type="submit" class="w-full py-3 text-sm mt-2 bg-green-400 text-white rounded-full">Login</button>
                     <p class="text-center text-sm mt-4">You dont have Account ! <a
