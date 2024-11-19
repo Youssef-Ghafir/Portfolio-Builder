@@ -41,7 +41,7 @@ session_start();
             </div>
             <ul class="py-2 text-sm text-gray-700 " aria-labelledby="avatarButton">
               <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">Dashboard</a>
+                <a href="dash.php" class="block px-4 py-2 hover:bg-gray-100 ">Dashboard</a>
               </li>
               <li>
                 <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">Settings</a>

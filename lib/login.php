@@ -1,4 +1,5 @@
 <?php
+require_once "lib/database.php";
 $errors = [];
 $values = ["email" => ""];
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
@@ -14,10 +15,22 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     if (empty($password)) {
         $errors['password'] = "Invalid Password";
     };
-
     if (count($errors) == 0) {
-        session_start();
-        $_SESSION['email'] = $email;
-        header("location:/portfolio-builder");
+        $sql = $conn->prepare("SELECT email,password from users WHERE email = ?");
+        $sql->bind_param("s", $email);
+        $sql->execute();
+        $result = $sql->get_result();
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            if (password_verify($password, $row['password'])) {
+                session_start();
+                $_SESSION['email'] = $email;
+                header("location:/portfolio-builder");
+            } else {
+                $errors['error'] = "Incorrect Password !";
+            }
+        } else {
+            $errors['error'] = "Incorrect Password or Email !";
+        }
     };
 }

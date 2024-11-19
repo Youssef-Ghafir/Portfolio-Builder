@@ -1,4 +1,5 @@
 <?php
+require_once "lib/database.php";
 $errors = [];
 $values = ['fname' => "", "lname" => "", "email" => ""];
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
@@ -21,13 +22,21 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     if (!preg_match($pattern_email, $email)) {
         $errors['email'] = "Invalid last email";
     };
-    if (!preg_match($pattern_name, $password)) {
+    if (strlen($password) <= 3) {
         $errors['password'] = "Invalid Password";
     };
     if ($password !== $c_password) {
         $errors['c_password'] = "Unmatch Password !";
     };
     if (count($errors) == 0) {
-        header("location:login.php");
+        $hashed_pass = password_hash($password, PASSWORD_DEFAULT);
+        $sql = $conn->prepare("INSERT INTO USERS (first_name, last_name, email, password) VALUES (?, ?, ?, ?)");
+        $sql->bind_param("ssss", $f_name, $l_name, $email, $hashed_pass);
+        if ($sql->execute()) {
+            header("location:login.php");
+            exit;
+        } else {
+            $errors["error"] = "Something Wrong Happen ! or this email already exists !";
+        }
     };
 }

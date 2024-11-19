@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  media: false,
   content: [
     "./**/*.html", // Matches all .html files in your project
     "./**/*.php", // Matches all .php files in your project
