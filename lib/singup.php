@@ -1,5 +1,6 @@
 <?php
 require_once "lib/database.php";
+require_once "models/users.php";
 $errors = [];
 $values = ['fname' => "", "lname" => "", "email" => ""];
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
@@ -29,10 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $errors['c_password'] = "Unmatch Password !";
     };
     if (count($errors) == 0) {
-        $hashed_pass = password_hash($password, PASSWORD_DEFAULT);
-        $sql = $conn->prepare("INSERT INTO USERS (first_name, last_name, email, password) VALUES (?, ?, ?, ?)");
-        $sql->bind_param("ssss", $f_name, $l_name, $email, $hashed_pass);
-        if ($sql->execute()) {
+        $conn = new Connect();
+        $conn = $conn->conn;
+        $user = new Users($f_name, $l_name, $email, $password);
+        $res = $user->add_user($conn);
+        var_dump($res);
+        if ($res) {
             header("location:login.php");
             exit;
         } else {
